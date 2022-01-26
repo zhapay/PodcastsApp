@@ -17,21 +17,21 @@ class MainTabBarController: UITabBarController {
     func configureTabBar() {
         UINavigationBar.appearance().prefersLargeTitles = true
         UITabBar.appearance().tintColor = .purple
-        viewControllers = [createFavoritesNavController(), createSearchNavController(), createDownloadsNavController()]
+        viewControllers = [createSearchNavController(), createFavoritesNavController(), createDownloadsNavController()]
+    }
+    
+    func createSearchNavController() -> UINavigationController {
+        let searchNavController = PodcastsSearchController()
+        searchNavController.title = "Search"
+        searchNavController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
+        return UINavigationController(rootViewController: searchNavController)
     }
     
     func createFavoritesNavController() -> UINavigationController {
         let favoritesNavController = ViewController()
         favoritesNavController.title = "Favorites"
-        favoritesNavController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 0)
+        favoritesNavController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         return UINavigationController(rootViewController: favoritesNavController)
-    }
-    
-    func createSearchNavController() -> UINavigationController {
-        let searchNavController = ViewController()
-        searchNavController.title = "Search"
-        searchNavController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 1)
-        return UINavigationController(rootViewController: searchNavController)
     }
     
     func createDownloadsNavController() -> UINavigationController {
