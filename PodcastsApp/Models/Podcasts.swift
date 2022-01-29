@@ -7,7 +7,10 @@
 
 import Foundation
 
-struct Podcasts {
-    var name: String
-    var artistName: String
+struct Podcasts: Decodable {
+    var trackName: String?
+    var artistName: String?
+    var artworkUrl600: String?
+    var trackCount: Int?
+    var feedUrl: String? 
 }

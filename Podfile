@@ -8,5 +8,8 @@ target 'PodcastsApp' do
   # Pods for PodcastsApp
 
 pod 'SnapKit'
+pod 'Alamofire'
+pod 'SDWebImage'
+pod 'FeedKit'
 
 end

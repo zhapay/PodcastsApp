@@ -6,11 +6,11 @@
 //
 
 import UIKit
+import Alamofire
 
 class PodcastsSearchController: UITableViewController {
     
-    var podcasts = [Podcasts(name: "Lets build that app", artistName: "Brian Voong"),
-                    Podcasts(name: "Sean Allen vlog", artistName: "Github App")]
+    var podcastArr = [Podcasts]()
     
     private let cellId = "cellId"
     var searchController = UISearchController(searchResultsController: nil)
@@ -22,33 +22,60 @@ class PodcastsSearchController: UITableViewController {
     }
     
     func configureTableView() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        let nib = UINib(nibName: "PodcastCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: cellId)
+        tableView.rowHeight = 132
+        tableView.tableFooterView = UIView()
     }
     
     func configureSearchController() {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.definesPresentationContext = true
         searchController.searchBar.placeholder = "Search for a podcast"
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
     }
-    
+   
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return podcasts.count
+        return podcastArr.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        let selectedIndex = self.podcasts[indexPath.row]
-        cell.textLabel?.text = "\(selectedIndex.name)\n\(selectedIndex.artistName)"
-        cell.textLabel?.numberOfLines = -1
-        cell.imageView?.image = Images.placeholderImage
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! PodcastCelll
+        let selectedIndex = self.podcastArr[indexPath.row]
+        cell.podcast = selectedIndex
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.text = "Please enter a search Term"
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        return label
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return self.podcastArr.count > 0 ? 0 : 250
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedIndex = podcastArr[indexPath.row]
+        let episodesController = EpisodesController()
+        episodesController.podcast = selectedIndex
+        navigationController?.pushViewController(episodesController, animated: true)
+    }
+    
 }
 
 extension PodcastsSearchController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
+        NetworkManager.shared.fetchPodcasts(searchText: searchText) { (podcast) in
+            self.podcastArr = podcast
+            DispatchQueue.main.async {
+                self.tableView.reloadData() 
+            }
+        }
     }
 }
