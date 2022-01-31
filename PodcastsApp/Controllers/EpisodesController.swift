@@ -11,6 +11,7 @@ import FeedKit
 class EpisodesController: UITableViewController {
     
     private let cellId = "cellId"
+    var episodes = [Episodes]()
     
     var podcast: Podcasts? {
         didSet {
@@ -22,39 +23,13 @@ class EpisodesController: UITableViewController {
     
     fileprivate func fetchFeedUrl() {
         guard let feedUrl = podcast?.feedUrl else { return }
-        let secureFeedUrl = feedUrl.contains("https") ? feedUrl : feedUrl.replacingOccurrences(of: "http", with: "https")
-        guard let url = URL(string: secureFeedUrl) else { return }
-        
-        let parser = FeedParser(URL: url)
-        
-        parser.parseAsync { (result) in
-            switch result {
-            
-            case .success(let feed):
-                switch feed {
-                case .rss(let feeed):
-                    var episodess = [Episodes]()
-                    feeed.items?.forEach({ (feedItem) in
-                        let episode = Episodes(title: feedItem.title ?? "")
-                        episodess.append(episode)
-                    })
-                    self.episodes = episodess
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                default:
-                    print("Found a feed...")
+        NetworkManager.shared.fetchEpisodes(feedUrl: feedUrl) { (episodes) in
+            self.episodes = episodes
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
-            case .failure(let err):
-                print("Failed to parse feedURL", err)
-                return
         }
     }
-}
-    
-    var episodes = [Episodes(title: "First"),
-                    Episodes(title: "Second"),
-                    Episodes(title: "Third")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +37,8 @@ class EpisodesController: UITableViewController {
     }
     
     func configureTableView() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        let nib = UINib(nibName: "EpisodesCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: cellId)
         tableView.tableFooterView = UIView()
     }
     
@@ -71,10 +47,14 @@ class EpisodesController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! EpisodesCell
         let selectedIndex = episodes[indexPath.row]
-        cell.textLabel?.text = selectedIndex.title
+        cell.episode = selectedIndex
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 134
     }
     
 }

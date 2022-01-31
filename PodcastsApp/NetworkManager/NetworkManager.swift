@@ -7,6 +7,7 @@
 
 import UIKit
 import Alamofire
+import FeedKit
 
 class NetworkManager {
     
@@ -33,4 +34,28 @@ class NetworkManager {
         }
     }
 
+    func fetchEpisodes(feedUrl: String, completed: @escaping (([Episodes]) -> ())) {
+        let secureFeedUrl = feedUrl.contains("https") ? feedUrl : feedUrl.replacingOccurrences(of: "http", with: "https")
+        guard let url = URL(string: secureFeedUrl) else { return }
+        
+        let parser = FeedParser(URL: url)
+        
+        parser.parseAsync { (result) in
+            
+            switch result {
+            case .success(let feed):
+                switch feed {
+                case .rss(let feeed):
+                    let episodes = feeed.toEpisodes()
+                    completed(episodes)
+                default:
+                    print("Found a feed...")
+            }
+            case .failure(let err):
+                print("Failed to parse feedURL", err)
+                return
+            }
+        }
+    }
+    
 }
