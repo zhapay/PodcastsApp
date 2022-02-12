@@ -28,6 +28,8 @@
 		4B823E2927A66F7500B1AEDB /* EpisodesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B823E2727A66F7500B1AEDB /* EpisodesCell.xib */; };
 		4B934A8327A5A143009643C6 /* EpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B934A8227A5A143009643C6 /* EpisodesController.swift */; };
 		4B934A8627A5A1A1009643C6 /* Episodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B934A8527A5A1A1009643C6 /* Episodes.swift */; };
+		4B9A99BC27ADAD870030E86C /* PlayerDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B9A99BB27ADAD870030E86C /* PlayerDetailView.xib */; };
+		4B9A99BF27ADAF980030E86C /* PlayerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A99BE27ADAF980030E86C /* PlayerDetailView.swift */; };
 		8BEA9B484388B18DA3B82F7D /* Pods_PodcastsApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4444ABEED2A104727F7D86E3 /* Pods_PodcastsApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +59,8 @@
 		4B823E2727A66F7500B1AEDB /* EpisodesCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EpisodesCell.xib; sourceTree = "<group>"; };
 		4B934A8227A5A143009643C6 /* EpisodesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesController.swift; sourceTree = "<group>"; };
 		4B934A8527A5A1A1009643C6 /* Episodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episodes.swift; sourceTree = "<group>"; };
+		4B9A99BB27ADAD870030E86C /* PlayerDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerDetailView.xib; sourceTree = "<group>"; };
+		4B9A99BE27ADAF980030E86C /* PlayerDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailView.swift; sourceTree = "<group>"; };
 		D6E5EA6638F23790A861DE2B /* Pods-PodcastsApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodcastsApp.release.xcconfig"; path = "Target Support Files/Pods-PodcastsApp/Pods-PodcastsApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,6 +91,8 @@
 				4B0129F927A579A200892E84 /* PodcastCelll.swift */,
 				4B823E2627A66F7500B1AEDB /* EpisodesCell.swift */,
 				4B823E2727A66F7500B1AEDB /* EpisodesCell.xib */,
+				4B9A99BB27ADAD870030E86C /* PlayerDetailView.xib */,
+				4B9A99BE27ADAF980030E86C /* PlayerDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -247,6 +253,7 @@
 				4B6A5A7027A1A5D1002F4226 /* Assets.xcassets in Resources */,
 				4B0129F727A5780800892E84 /* PodcastCell.xib in Resources */,
 				4B823E2927A66F7500B1AEDB /* EpisodesCell.xib in Resources */,
+				4B9A99BC27ADAD870030E86C /* PlayerDetailView.xib in Resources */,
 				4B6A5A6B27A1A5CD002F4226 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,6 +311,7 @@
 				4B934A8627A5A1A1009643C6 /* Episodes.swift in Sources */,
 				4B6A5A6427A1A5CD002F4226 /* AppDelegate.swift in Sources */,
 				4B0129F227A56FE000892E84 /* NetworkManager.swift in Sources */,
+				4B9A99BF27ADAF980030E86C /* PlayerDetailView.swift in Sources */,
 				4B6A5A8527A1B35C002F4226 /* PodcastsSearchController.swift in Sources */,
 				4B6A5A7C27A1A6E9002F4226 /* MainTabBarController.swift in Sources */,
 				4B35C2F927A84726008287EF /* Ext + RSSFeed.swift in Sources */,
